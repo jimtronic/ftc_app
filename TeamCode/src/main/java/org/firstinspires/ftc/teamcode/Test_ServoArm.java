@@ -53,58 +53,22 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestMotorCalibration")
-public class Test_2 extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestMotor")
+public class Test_ServoArm extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
     ElapsedTime timer = new ElapsedTime();
 
-    final static int RED = -1;
-    final static int BLUE = 1;
-    final static int FORWARD = 1;
-    final static int BACKWARD = -1;
-    int teamColor = RED;
 
+    // The goal of this test is to test the range of the servo arm.
+    // We will use the gamepad buttons to move the servo slightly..
+    // We will emit the position of the servo in the
 
-    // distance to move block
-    // number of positions for motor in full rotation
-    // size of the wheel.
-
-    // These together should tell us how many positions to count.
-
-    // Next we need to determine good speed.
-
-    // set calibration values:
-
-    double leftDrive1Calibrate = 1.0;
-    double leftDrive2Calibrate = 1.0;
-    double rightDrive1Calibrate = 1.0;
-    double rightDrive2Calibrate = 1.0;
-
-
-    // Real.min(<val1>, 1.0);
-    public void setMotorPowers(double amount) {
-        hw.leftDrive1.setPower(amount*leftDrive1Calibrate);
-        hw.leftDrive2.setPower(amount);
-        hw.rightDrive1.setPower(amount);
-        hw.rightDrive2.setPower(amount);
-    }
-
-    public void setEncoderRevolutions(int revs, double power) {
-        hw.leftDrive1.setTargetPosition(revs);
-        hw.leftDrive1.setPower(power);
-        hw.leftDrive2.setTargetPosition(revs);
-        hw.leftDrive2.setPower(power);
-        hw.rightDrive1.setTargetPosition(revs);
-        hw.rightDrive1.setPower(power);
-        hw.rightDrive2.setTargetPosition(revs);
-        hw.rightDrive2.setPower(power);
-    }
-
+    double servoPosition = 0.5;
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Init", "Hello! It's me");
+        telemetry.addData("Init", "Hello! Test Servo Arm");
         hw.init(hardwareMap);
 
 
@@ -114,26 +78,27 @@ public class Test_2 extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        setMotorPowers(0.25);
+        hw.colorServo.setPosition(servoPosition);
 
-        telemetry.addData("trying speed test", "dummy");
+        telemetry.addData("trying servo test", "dummy");
         telemetry.update();
         while (true) {
-            telemetry.addData("Left Motor", "Calibration " + leftDrive1Calibrate);
+            telemetry.addData("Servo Position", "Position " + hw.colorServo.getPosition());
             telemetry.update();
 
-            try { Thread.currentThread().wait(50); } catch (InterruptedException e) {}
+
+            //Thread.currentThread().wait(100);
             if (gamepad1.a) {
                 break;
             }
             if (gamepad1.x) {
-                leftDrive1Calibrate = leftDrive1Calibrate - 0.01;
+                servoPosition = servoPosition - 0.01;
             }
             if (gamepad1.b) {
-                leftDrive1Calibrate = leftDrive1Calibrate + 0.01;
+                servoPosition = servoPosition + 0.01;
             }
-            setMotorPowers(0.25);
-
+            try { wait(50); } catch (InterruptedException e) {}
+            hw.colorServo.setPosition(servoPosition);
         }
 
     }
