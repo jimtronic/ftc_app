@@ -121,8 +121,7 @@ public class Test_2 extends LinearOpMode {
         while (true) {
             telemetry.addData("Left Motor", "Calibration " + leftDrive1Calibrate);
             telemetry.update();
-
-            try { Thread.currentThread().wait(50); } catch (InterruptedException e) {}
+            sleep(50);
             if (gamepad1.a) {
                 break;
             }
