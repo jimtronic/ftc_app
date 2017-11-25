@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestMotorCalibration")
-public class Test_2 extends LinearOpMode {
+public class TestMotorCalibration extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
     ElapsedTime timer = new ElapsedTime();

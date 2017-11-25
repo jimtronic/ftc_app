@@ -97,7 +97,7 @@ public class Test_ServoArm extends LinearOpMode {
             if (gamepad1.b) {
                 servoPosition = servoPosition + 0.01;
             }
-            try { wait(50); } catch (InterruptedException e) {}
+            sleep(100);
             hw.colorServo.setPosition(servoPosition);
         }
 
