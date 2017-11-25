@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestMotor")
-public class Test extends LinearOpMode {
+public class Test_2 extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
     ElapsedTime timer = new ElapsedTime();
@@ -74,6 +74,15 @@ public class Test extends LinearOpMode {
 
     // Next we need to determine good speed.
 
+    // set calibration values:
+
+    double leftDrive1Calibrate = 1.0;
+    double leftDrive2Calibrate = 1.0;
+    double rightDrive1Calibrate = 1.0;
+    double rightDrive2Calibrate = 1.0;
+
+
+    // Real.min(<val1>, 1.0);
     public void setMotorPowers(double amount) {
         hw.leftDrive1.setPower(amount);
         hw.leftDrive2.setPower(amount);
@@ -109,11 +118,14 @@ public class Test extends LinearOpMode {
 
         telemetry.addData("trying speed test", "dummy");
         telemetry.update();
-        for (int i = 0; i < 50; i++) {
+        while (true) {
             telemetry.addData("Left Motor", "Position " + hw.leftDrive1.getCurrentPosition());
             telemetry.update();
-            sleep(100);
+
             //Thread.currentThread().wait(100);
+            if (gamepad1.a) {
+                break;
+            }
         }
 
         telemetry.addData("trying position test", "dummy");
