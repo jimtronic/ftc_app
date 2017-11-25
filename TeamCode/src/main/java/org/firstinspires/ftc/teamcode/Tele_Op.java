@@ -47,6 +47,14 @@ public class Tele_Op extends OpMode {
             hw.armMotor.setPower(0.0);
         }
 
+        if (gamepad2.right_trigger > 0.8){
+            hw.clawPosition += hw.CLAW_SPEED;
+        } else if (gamepad2.left_trigger > 0.8){
+            hw.clawPosition -= hw.CLAW_SPEED;
+        }
+
+        hw.clawPosition = Range.clip(hw.clawPosition, 0.0, 0.2);
+        hw.clawServo1.setPosition(hw.clawPosition);
 
         telemetry.addData("LEFT_FRONT", hw.leftDrive1.getPower());
 
@@ -67,6 +75,8 @@ public class Tele_Op extends OpMode {
         telemetry.addData("BLUE", hw.colorSensor.blue());
 
         telemetry.addData("ALPHA", hw.colorSensor.alpha());
+
+        telemetry.addData("Claw 1 Position", "Position " + hw.clawServo1.getPosition());
 
 
         if (hw.colorSensor.red()>hw.colorSensor.blue() ){

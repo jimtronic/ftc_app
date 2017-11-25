@@ -22,6 +22,8 @@ public class HardwareBucketBrigade {
     public Servo clawServo1;
     public Servo clawServo2;
     public Servo colorServo;
+    public double CLAW_SPEED = 0.01;
+    public double clawPosition = 0.2;
 
     // MWW NOTE: these are guesses, modify to fit actual robot.
     public final double COLOR_SERVO_MIN_POSITION = 0.5;
@@ -36,10 +38,10 @@ public class HardwareBucketBrigade {
         rightDrive2 = hardwareMap.get(DcMotor.class, "rightBack");
         strafeWheel = hardwareMap.get(DcMotor.class, "strafeWheel");
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        // clawServo1 = hardwareMap.get(Servo.class, "clawServo1");
-        // clawServo2 = hardwareMap.get(Servo.class, "clawServo2");
+        clawServo1 = hardwareMap.get(Servo.class, "clawServo1");
         colorServo = hardwareMap.get(Servo.class, "colorServo");
         colorSensor = hardwareMap.get(ColorSensor.class, "color");
+
 
         leftDrive1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftDrive1.setDirection(DcMotor.Direction.FORWARD);
