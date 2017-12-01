@@ -64,7 +64,7 @@ public class Test_ServoArm extends LinearOpMode {
     // We will use the gamepad buttons to move the servo slightly..
     // We will emit the position of the servo in the
 
-    double servoPosition = 0.5;
+    double servoPosition = 0.15;
 
     @Override
     public void runOpMode() {
@@ -92,12 +92,12 @@ public class Test_ServoArm extends LinearOpMode {
                 break;
             }
             if (gamepad1.x) {
-                servoPosition = servoPosition - 0.01;
+                servoPosition = servoPosition - 0.05;
             }
             if (gamepad1.b) {
-                servoPosition = servoPosition + 0.01;
+                servoPosition = servoPosition + 0.05;
             }
-            sleep(100);
+            sleep(1000);
             hw.colorServo.setPosition(servoPosition);
         }
 

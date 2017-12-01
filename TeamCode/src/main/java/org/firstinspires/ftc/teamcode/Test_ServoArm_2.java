@@ -53,8 +53,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestClawServoArm")
-public class Test_ClawServoArm extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestServoArm2")
+public class Test_ServoArm_2 extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
     ElapsedTime timer = new ElapsedTime();
@@ -64,11 +64,11 @@ public class Test_ClawServoArm extends LinearOpMode {
     // We will use the gamepad buttons to move the servo slightly..
     // We will emit the position of the servo in the
 
-    double servoPosition = 0.5;
+    double servoPosition = 0.048;
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Init", "Hello! Test Claw Servo Arm");
+        telemetry.addData("Init", "Hello! Test Servo Arm");
         hw.init(hardwareMap);
 
 
@@ -78,12 +78,12 @@ public class Test_ClawServoArm extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        hw.clawServo1.setPosition(servoPosition);
+        hw.colorServo.setPosition(servoPosition);
 
-        telemetry.addData("trying claw servo test", "dummy");
+        telemetry.addData("trying servo test", "dummy");
         telemetry.update();
         while (true) {
-            telemetry.addData("Claw Servo Position", "Position " + hw.clawServo1.getPosition());
+            telemetry.addData("Servo Position", "Position " + hw.colorServo.getPosition());
             telemetry.update();
 
 
@@ -92,13 +92,13 @@ public class Test_ClawServoArm extends LinearOpMode {
                 break;
             }
             if (gamepad1.x) {
-                servoPosition = servoPosition - 0.01;
+                servoPosition = servoPosition - 0.05;
             }
             if (gamepad1.b) {
-                servoPosition = servoPosition + 0.01;
+                servoPosition = servoPosition + 0.05;
             }
-            sleep(100);
-            hw.clawServo1.setPosition(servoPosition);
+            sleep(500);
+            hw.colorServo.setPosition(servoPosition);
         }
 
     }

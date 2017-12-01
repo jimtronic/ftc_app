@@ -63,20 +63,23 @@ public class Autonomous extends LinearOpMode {
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
     ElapsedTime timer = new ElapsedTime();
 
+
     final static int RED = -1;
     final static int BLUE = 1;
     final static int FORWARD = 1;
     final static int BACKWARD = -1;
     int teamColor = RED;
 
+    double jewelSpeed = 0.5;
+    final int TIME_TO_KNOCK_OFF = 300; // ms
+
 
     public void driveDirection(int forwardOrBackward) {
-/*        hw.leftDrive1.setPower(gamepad1.left_stick_y);
-        hw.rightDrive1.setPower(gamepad1.right_stick_y);
-        hw.leftDrive2.setPower(gamepad1.left_stick_y);
-        hw.rightDrive2.setPower(gamepad1.right_stick_y);
-  */
-        telemetry.addData("Left Motor", "Position " + hw.leftDrive1.getCurrentPosition());
+        hw.leftDrive1.setPower(jewelSpeed*forwardOrBackward);
+        hw.rightDrive1.setPower(jewelSpeed*forwardOrBackward);
+        hw.leftDrive2.setPower(jewelSpeed*forwardOrBackward);
+        hw.rightDrive2.setPower(jewelSpeed*forwardOrBackward);
+
     }
 
 
@@ -121,11 +124,17 @@ public class Autonomous extends LinearOpMode {
 
         //drive forward/backward
         int driveDirection = teamColor * colorSeen;
+        driveDirection(driveDirection);
 
+        sleep(TIME_TO_KNOCK_OFF);
+        driveDirection(0);
 
         //raise the arm
 
         //back to center
-
+        driveDirection(-driveDirection);
+        sleep(TIME_TO_KNOCK_OFF);
+        driveDirection(0);
     }
+
 }

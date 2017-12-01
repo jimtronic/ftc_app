@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 /**
  * Created by phinn on 11/18/2017.
  */
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -19,15 +20,12 @@ public class HardwareBucketBrigade {
     public DcMotor rightDrive2;
     public DcMotor strafeWheel;
     public DcMotor armMotor;
-    public Servo clawServo1;
+    public CRServo clawServo1;
     public Servo clawServo2;
     public Servo colorServo;
-    public double CLAW_SPEED = 0.01;
-    public double clawPosition = 0.2;
-
-    // MWW NOTE: these are guesses, modify to fit actual robot.
-    public final double COLOR_SERVO_MIN_POSITION = 0.5;
-    public final double COLOR_SERVO_MAX_POSITION = 0.95;
+    public double CLAW_SPEED = 1;
+    public double clawPower = 1;
+    
 
     public ColorSensor colorSensor;
     public void init(HardwareMap hardwareMap) {
@@ -38,7 +36,7 @@ public class HardwareBucketBrigade {
         rightDrive2 = hardwareMap.get(DcMotor.class, "rightBack");
         strafeWheel = hardwareMap.get(DcMotor.class, "strafeWheel");
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        clawServo1 = hardwareMap.get(Servo.class, "clawServo1");
+        clawServo1 = hardwareMap.crservo.get("clawServo1");
         colorServo = hardwareMap.get(Servo.class, "colorServo");
         colorSensor = hardwareMap.get(ColorSensor.class, "color");
 
@@ -62,6 +60,6 @@ public class HardwareBucketBrigade {
         armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        colorServo.scaleRange(this.COLOR_SERVO_MIN_POSITION, this.COLOR_SERVO_MAX_POSITION);
+        ///colorServo.scaleRange(this.COLOR_SERVO_MIN_POSITION, this.COLOR_SERVO_MAX_POSITION);
     }
 }

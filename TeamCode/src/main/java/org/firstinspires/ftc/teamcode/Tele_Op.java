@@ -1,11 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "", group = "Iterative Opmode")
 //@Disabled
@@ -26,10 +21,10 @@ public class Tele_Op extends OpMode {
     public void loop() {
 
 
-        hw.leftDrive1.setPower(gamepad1.left_stick_y);
-        hw.rightDrive1.setPower(gamepad1.right_stick_y);
-        hw.leftDrive2.setPower(gamepad1.left_stick_y);
-        hw.rightDrive2.setPower(gamepad1.right_stick_y);
+        hw.leftDrive1.setPower(gamepad1.left_stick_y*.75);
+        hw.rightDrive1.setPower(gamepad1.right_stick_y*.75);
+        hw.leftDrive2.setPower(gamepad1.left_stick_y*.75);
+        hw.rightDrive2.setPower(gamepad1.right_stick_y*.75);
 
         if (gamepad1.dpad_right){
             hw.strafeWheel.setPower(1.0);
@@ -48,13 +43,15 @@ public class Tele_Op extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0.8){
-            hw.clawPosition += hw.CLAW_SPEED;
+            hw.clawPower = hw.CLAW_SPEED;
         } else if (gamepad2.left_trigger > 0.8){
-            hw.clawPosition -= hw.CLAW_SPEED;
+            hw.clawPower = -hw.CLAW_SPEED;
+        } else {
+            hw.clawPower = 0;
         }
 
-        hw.clawPosition = Range.clip(hw.clawPosition, 0.0, 0.2);
-        hw.clawServo1.setPosition(hw.clawPosition);
+        hw.clawPower = Range.clip(hw.clawPower, -1, 1);
+        hw.clawServo1.setPower(hw.clawPower);
 
         telemetry.addData("LEFT_FRONT", hw.leftDrive1.getPower());
 
@@ -75,9 +72,6 @@ public class Tele_Op extends OpMode {
         telemetry.addData("BLUE", hw.colorSensor.blue());
 
         telemetry.addData("ALPHA", hw.colorSensor.alpha());
-
-        telemetry.addData("Claw 1 Position", "Position " + hw.clawServo1.getPosition());
-
 
         if (hw.colorSensor.red()>hw.colorSensor.blue() ){
             telemetry.addData("COLOR:", "More Red");
