@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestServoArm")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="TestServoArm")
 public class Test_ServoArm extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
@@ -64,7 +64,7 @@ public class Test_ServoArm extends LinearOpMode {
     // We will use the gamepad buttons to move the servo slightly..
     // We will emit the position of the servo in the
 
-    double servoPosition = 0.15;
+    double servoPosition = 1;
 
     @Override
     public void runOpMode() {

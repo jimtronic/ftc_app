@@ -64,7 +64,7 @@ public class Test_ServoArm_2 extends LinearOpMode {
     // We will use the gamepad buttons to move the servo slightly..
     // We will emit the position of the servo in the
 
-    double servoPosition = 0.048;
+    double servoPosition = 0.1;
 
     @Override
     public void runOpMode() {

@@ -71,10 +71,14 @@ public class Autonomous extends LinearOpMode {
     int teamColor = RED;
 
     double jewelSpeed = 0.5;
-    final int TIME_TO_KNOCK_OFF = 300; // ms
+    final int TIME_TO_KNOCK_OFF = 400; // ms
+    final int TIME_TO_DRIVE_TO_BASE = 4250;
+    final int HYSTERISIS_TIME = 500;
+    final int ARM_DROP_TIME = 1500;
+    final int CLAW_RAISE_TIME = 500;
+    final double ARM_RAISE_SPEED = 0.5;
 
-
-    public void driveDirection(int forwardOrBackward) {
+    public void driveDirection(double forwardOrBackward) {
         hw.leftDrive1.setPower(jewelSpeed*forwardOrBackward);
         hw.rightDrive1.setPower(jewelSpeed*forwardOrBackward);
         hw.leftDrive2.setPower(jewelSpeed*forwardOrBackward);
@@ -88,28 +92,27 @@ public class Autonomous extends LinearOpMode {
         telemetry.addData("Init", "Hello! It's me");
         hw.init(hardwareMap);
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        hw.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
+        hw.clawServo1.setPower(0.7);
+        hw.armMotor.setPower(ARM_RAISE_SPEED);
+        sleep(CLAW_RAISE_TIME);
+        hw.armMotor.setPower(0.0);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // drop the arm
-        {
-            //drop arm until timer = _
-            hw.colorServo.setPosition(1); // This is a guess
 
-        }
+        hw.colorServo.setPosition(0.8);
 
 
 
+
+        sleep(ARM_DROP_TIME);
         // check color.
         // do we need to get hysteresis?
 
@@ -130,11 +133,21 @@ public class Autonomous extends LinearOpMode {
         driveDirection(0);
 
         //raise the arm
+        hw.colorServo.setPosition(0.0);
 
+        sleep(ARM_DROP_TIME);
         //back to center
         driveDirection(-driveDirection);
         sleep(TIME_TO_KNOCK_OFF);
         driveDirection(0);
+
+        sleep(HYSTERISIS_TIME);
+        driveDirection(0.5);
+        sleep(TIME_TO_DRIVE_TO_BASE);
+        driveDirection(0.0);
     }
+
+
+
 
 }

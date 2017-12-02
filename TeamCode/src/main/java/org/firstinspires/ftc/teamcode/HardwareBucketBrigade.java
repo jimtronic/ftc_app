@@ -25,7 +25,7 @@ public class HardwareBucketBrigade {
     public Servo colorServo;
     public double CLAW_SPEED = 1;
     public double clawPower = 1;
-    
+
 
     public ColorSensor colorSensor;
     public void init(HardwareMap hardwareMap) {

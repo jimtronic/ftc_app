@@ -85,9 +85,9 @@ public class TestMotorCalibration extends LinearOpMode {
     // Real.min(<val1>, 1.0);
     public void setMotorPowers(double amount) {
         hw.leftDrive1.setPower(amount*leftDrive1Calibrate);
-        hw.leftDrive2.setPower(amount);
-        hw.rightDrive1.setPower(amount);
-        hw.rightDrive2.setPower(amount);
+        hw.leftDrive2.setPower(amount*leftDrive2Calibrate);
+        hw.rightDrive1.setPower(amount*rightDrive1Calibrate);
+        hw.rightDrive2.setPower(amount*rightDrive2Calibrate);
     }
 
     public void setEncoderRevolutions(int revs, double power) {
@@ -121,15 +121,15 @@ public class TestMotorCalibration extends LinearOpMode {
         while (true) {
             telemetry.addData("Left Motor", "Calibration " + leftDrive1Calibrate);
             telemetry.update();
-            sleep(50);
+            sleep(200);
             if (gamepad1.a) {
                 break;
             }
             if (gamepad1.x) {
-                leftDrive1Calibrate = leftDrive1Calibrate - 0.01;
+                leftDrive1Calibrate = leftDrive1Calibrate - 0.02;
             }
             if (gamepad1.b) {
-                leftDrive1Calibrate = leftDrive1Calibrate + 0.01;
+                leftDrive1Calibrate = leftDrive1Calibrate + 0.02;
             }
             setMotorPowers(0.25);
 
