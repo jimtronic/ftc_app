@@ -29,11 +29,12 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.*;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -56,40 +57,26 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-public class ParametricAutonomous {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous")
+public class Autonomous extends LinearOpMode {
 
-    LinearOpMode shell;
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
     ElapsedTime timer = new ElapsedTime();
 
-    // constants that identify which team we are;
-    public final static int RED = -1;
-    public final static int BLUE = 1;
-    public final static int FORWARD = 1;
-    public final static int BACKWARD = -1;
 
-    // contest-time parameters depending on team color and orientation
-    int teamColor;
-    public enum Orientation {BOX_FRONT, BOX_L_PATH};
-    Orientation orientation;
+    final static int RED = -1;
+    final static int BLUE = 1;
+    final static int FORWARD = 1;
+    final static int BACKWARD = -1;
+    int teamColor = RED;
 
-    // constant parameters for tuning the robot
-    public final double jewelSpeed = 0.5;
-    public final int TIME_TO_KNOCK_OFF = 400; // ms
-    public final int TIME_TO_DRIVE_TO_BASE = 4250;
-    public final int HYSTERISIS_TIME = 500;
-    public final int ARM_DROP_TIME = 1500;
-    public final int CLAW_RAISE_TIME = 500;
-    public final double ARM_RAISE_SPEED = 0.5;
-
-    // Constructor
-    ParametricAutonomous(LinearOpMode shell,
-                         int teamColor,
-                         Orientation orientation) {
-        this.teamColor = teamColor;
-        this.orientation = orientation;
-        this.shell = shell;
-    }
+    double jewelSpeed = 0.5;
+    final int TIME_TO_KNOCK_OFF = 400; // ms
+    final int TIME_TO_DRIVE_TO_BASE = 4250;
+    final int HYSTERISIS_TIME = 500;
+    final int ARM_DROP_TIME = 1500;
+    final int CLAW_RAISE_TIME = 500;
+    final double ARM_RAISE_SPEED = 0.5;
 
     public void driveDirection(double forwardOrBackward) {
         hw.leftDrive1.setPower(jewelSpeed*forwardOrBackward);
@@ -100,22 +87,23 @@ public class ParametricAutonomous {
     }
 
 
+    @Override
     public void runOpMode() {
-        shell.telemetry.addData("Init", "Hello! It's me");
-        hw.init(shell.hardwareMap);
+        telemetry.addData("Init", "Hello! It's me");
+        hw.init(hardwareMap);
 
 
         // Send telemetry message to signify robot waiting;
-        shell.telemetry.addData("Status", "Ready to run");    //
-        shell.telemetry.update();
+        telemetry.addData("Status", "Ready to run");    //
+        telemetry.update();
 
         hw.clawServo1.setPower(0.7);
         hw.armMotor.setPower(ARM_RAISE_SPEED);
-        shell.sleep(CLAW_RAISE_TIME);
+        sleep(CLAW_RAISE_TIME);
         hw.armMotor.setPower(0.0);
 
         // Wait for the game to start (driver presses PLAY)
-        shell.waitForStart();
+        waitForStart();
 
         // drop the arm
 
@@ -124,16 +112,16 @@ public class ParametricAutonomous {
 
 
 
-        shell.sleep(ARM_DROP_TIME);
+        sleep(ARM_DROP_TIME);
         // check color.
         // do we need to get hysteresis?
 
         int colorSeen;
         if (hw.colorSensor.red()>hw.colorSensor.blue() ){
-            shell.telemetry.addData("COLOR:", "More Red");
+            telemetry.addData("COLOR:", "More Red");
             colorSeen = RED;
         } else {
-            shell.telemetry.addData("COLOR", "More Blue");
+            telemetry.addData("COLOR", "More Blue");
             colorSeen = BLUE;
         }
 
@@ -141,22 +129,25 @@ public class ParametricAutonomous {
         int driveDirection = teamColor * colorSeen;
         driveDirection(driveDirection);
 
-        shell.sleep(TIME_TO_KNOCK_OFF);
+        sleep(TIME_TO_KNOCK_OFF);
         driveDirection(0);
 
         //raise the arm
         hw.colorServo.setPosition(0.0);
 
-        shell.sleep(ARM_DROP_TIME);
+        sleep(ARM_DROP_TIME);
         //back to center
         driveDirection(-driveDirection);
-        shell.sleep(TIME_TO_KNOCK_OFF);
+        sleep(TIME_TO_KNOCK_OFF);
         driveDirection(0);
 
-        shell.sleep(HYSTERISIS_TIME);
+        sleep(HYSTERISIS_TIME);
         driveDirection(0.5);
-        shell.sleep(TIME_TO_DRIVE_TO_BASE);
+        sleep(TIME_TO_DRIVE_TO_BASE);
         driveDirection(0.0);
     }
+
+
+
 
 }
