@@ -68,10 +68,10 @@ public class Autonomous extends LinearOpMode {
 
     // constants for autonomous mode
     final int TIME_TO_KNOCK_OFF = 400; // ms
-    final int TIME_TO_DRIVE_TO_BASE = 4500;
+    final int TIME_TO_DRIVE_TO_BASE = 4200;
     final int TIME_FOR_HYSTERISIS = 500;
     final int TIME_FOR_ARM_DROP = 1500;
-    final int TIME_FOR_CLAW_RAISE = 500;
+    final int TIME_FOR_CLAW_RAISE = 900;
     final double SPEED_TO_KNOCK_OFF = 0.7;
     final double SPEED_TO_DRIVE = 0.5;
     final double SPEED_FOR_ARM_RAISE = 0.5;
@@ -155,10 +155,15 @@ public class Autonomous extends LinearOpMode {
         sleep(TIME_TO_DRIVE_TO_BASE);
         driveDirection(0.0);
 
+
+        // Because of an issue involving the motors (not quite calibrated)
+        // we need to strafe when in straight mode
         if (orientation == Orientation.Straight) {
-            strafeDirection(-1.0*teamColor);
-            sleep(400);
+            strafeDirection(1.0);
+            sleep(1000);
             strafeDirection(0.0);
+        } else if (orientation == Orientation.L_Shaped) {
+            // TBD: write code for reorienting code.
         }
     }
 
