@@ -109,7 +109,7 @@ public class Test_Strafe extends LinearOpMode {
         for (int i=3; i < 25; i++) {
             turnDirection(LEFT);
             sleep(i * 100);
-            driveDirection(0);
+            turnDirection(0.0);
             telemetry.addData("Time to turn", "is: " + i*100);    //
             telemetry.update();
             sleep(1000);

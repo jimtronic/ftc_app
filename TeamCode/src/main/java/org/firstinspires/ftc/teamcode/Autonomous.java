@@ -68,7 +68,7 @@ public class Autonomous extends LinearOpMode {
 
     // constants for autonomous mode
     final int TIME_TO_KNOCK_OFF = 400; // ms
-    final int TIME_TO_DRIVE_TO_BASE = 5000;
+    final int TIME_TO_DRIVE_TO_BASE = 4500;
     final int TIME_FOR_HYSTERISIS = 500;
     final int TIME_FOR_ARM_DROP = 1500;
     final int TIME_FOR_CLAW_RAISE = 500;
@@ -83,12 +83,14 @@ public class Autonomous extends LinearOpMode {
 
     public void driveDirection(double forwardOrBackward) {
         hw.leftDrive1.setPower(jewelSpeed*forwardOrBackward);
-        hw.rightDrive1.setPower(jewelSpeed*forwardOrBackward);
         hw.leftDrive2.setPower(jewelSpeed*forwardOrBackward);
+        hw.rightDrive1.setPower(jewelSpeed*forwardOrBackward);
         hw.rightDrive2.setPower(jewelSpeed*forwardOrBackward);
-
     }
 
+    public void strafeDirection(double forwardOrBackward) {
+        hw.strafeWheel.setPower(jewelSpeed*forwardOrBackward);
+    }
 
     @Override
     public void runOpMode() {
@@ -111,8 +113,6 @@ public class Autonomous extends LinearOpMode {
         // drop the arm
 
         hw.colorServo.setPosition(0.8);
-
-
 
 
         sleep(TIME_FOR_ARM_DROP);
@@ -154,6 +154,12 @@ public class Autonomous extends LinearOpMode {
         driveDirection(-1.0*teamColor*SPEED_TO_DRIVE);
         sleep(TIME_TO_DRIVE_TO_BASE);
         driveDirection(0.0);
+
+        if (orientation == Orientation.Straight) {
+            strafeDirection(-1.0*teamColor);
+            sleep(400);
+            strafeDirection(0.0);
+        }
     }
 
 
