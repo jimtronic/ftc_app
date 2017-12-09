@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 //@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous")
-public class Autonomous extends LinearOpMode {
+public class Test_QuarterTurn extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
     ElapsedTime timer = new ElapsedTime();
@@ -62,24 +62,23 @@ public class Autonomous extends LinearOpMode {
 
     final static int RED = -1;
     final static int BLUE = 1;
+    final static int LEFT = -1;
+    final static int RIGHT = 1;
     final static int FORWARD = 1;
     final static int BACKWARD = -1;
-    enum Orientation {Straight, L_Shaped};
-
-    // constants for autonomous mode
-    final int TIME_TO_KNOCK_OFF = 400; // ms
-    final int TIME_TO_DRIVE_TO_BASE = 5000;
-    final int TIME_FOR_HYSTERISIS = 500;
-    final int TIME_FOR_ARM_DROP = 1500;
-    final int TIME_FOR_CLAW_RAISE = 500;
-    final double SPEED_TO_KNOCK_OFF = 0.7;
-    final double SPEED_TO_DRIVE = 0.5;
-    final double SPEED_FOR_ARM_RAISE = 0.5;
-
-    // parameters for autonomous mode
     int teamColor = RED;
+    enum Orientation {Straight, L_Shaped};
     Orientation orientation = Orientation.Straight;
+
     double jewelSpeed = 0.5;
+    final int TIME_TO_KNOCK_OFF = 400; // ms
+    final int TIME_TO_TURN = 500;
+    final int TIME_TO_DRIVE_TO_BASE = 5000;
+    final int HYSTERISIS_TIME = 500;
+    final int ARM_DROP_TIME = 1500;
+    final int CLAW_RAISE_TIME = 500;
+    final double ARM_RAISE_SPEED = 0.5;
+
 
     public void driveDirection(double forwardOrBackward) {
         hw.leftDrive1.setPower(jewelSpeed*forwardOrBackward);
@@ -89,6 +88,12 @@ public class Autonomous extends LinearOpMode {
 
     }
 
+    public void turnDirection(double forwardOrBackward) {
+        hw.leftDrive1.setPower(jewelSpeed*-1.0*forwardOrBackward);
+        hw.leftDrive2.setPower(jewelSpeed*-1.0*forwardOrBackward);
+        hw.rightDrive1.setPower(jewelSpeed*forwardOrBackward);
+        hw.rightDrive2.setPower(jewelSpeed*forwardOrBackward);
+    }
 
     @Override
     public void runOpMode() {
@@ -100,63 +105,19 @@ public class Autonomous extends LinearOpMode {
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
-        hw.clawServo1.setPower(0.7);
-        hw.armMotor.setPower(SPEED_FOR_ARM_RAISE);
-        sleep(TIME_FOR_CLAW_RAISE);
-        hw.armMotor.setPower(0.0);
-
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // drop the arm
-
-        hw.colorServo.setPosition(0.8);
-
-
-
-
-        sleep(TIME_FOR_ARM_DROP);
-        // check color.
-        // do we need to get hysteresis?
-
-        int colorSeen;
-        if (hw.colorSensor.red()>hw.colorSensor.blue() ){
-            telemetry.addData("COLOR:", "More Red");
-            colorSeen = RED;
-        } else {
-            telemetry.addData("COLOR", "More Blue");
-            colorSeen = BLUE;
-        }
-
         //drive forward/backward
-        double driveDirection = teamColor * colorSeen * SPEED_TO_KNOCK_OFF;
-        driveDirection(driveDirection);
 
-        sleep(TIME_TO_KNOCK_OFF);
-        driveDirection(0);
-
-        //raise the arm
-        hw.colorServo.setPosition(0.0);
-
-        sleep(TIME_FOR_ARM_DROP);
-        //back to center
-        driveDirection(-driveDirection);
-        sleep(TIME_TO_KNOCK_OFF);
-        driveDirection(0);
-
-        sleep(TIME_FOR_HYSTERISIS);
-
-        // The direction to drive is based on orientation
-        // When on the red platform, the robot orientation is "backwards"
-        // of the crypto box.  When on the blue platform, the robot orientation
-        // is forward to the crypto box.
-
-        driveDirection(-1.0*teamColor*SPEED_TO_DRIVE);
-        sleep(TIME_TO_DRIVE_TO_BASE);
-        driveDirection(0.0);
+        for (int i=3; i < 25; i++) {
+            turnDirection(LEFT);
+            sleep(i * 100);
+            driveDirection(0);
+            telemetry.addData("Time to turn", "is: " + i*100);    //
+            telemetry.update();
+            sleep(1000);
+        }
     }
-
-
-
 
 }
