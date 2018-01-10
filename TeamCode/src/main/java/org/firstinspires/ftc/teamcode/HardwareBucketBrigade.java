@@ -14,10 +14,10 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class HardwareBucketBrigade {
 
-    public DcMotor leftDrive1;
-    public DcMotor leftDrive2;
-    public DcMotor rightDrive1;
-    public DcMotor rightDrive2;
+    public DcMotor leftDriveFront;
+    public DcMotor leftDriveBack;
+    public DcMotor rightDriveFront;
+    public DcMotor rightDriveBack;
     public DcMotor strafeWheel;
     public DcMotor armMotor;
     public CRServo clawServo1;
@@ -30,10 +30,10 @@ public class HardwareBucketBrigade {
     public ColorSensor colorSensor;
     public void init(HardwareMap hardwareMap) {
 
-        leftDrive1 = hardwareMap.get(DcMotor.class, "leftFront");
-        leftDrive2 = hardwareMap.get(DcMotor.class, "leftBack");
-        rightDrive1 = hardwareMap.get(DcMotor.class, "rightFront");
-        rightDrive2 = hardwareMap.get(DcMotor.class, "rightBack");
+        leftDriveFront = hardwareMap.get(DcMotor.class, "leftFront");
+        leftDriveBack = hardwareMap.get(DcMotor.class, "leftBack");
+        rightDriveFront = hardwareMap.get(DcMotor.class, "rightFront");
+        rightDriveBack = hardwareMap.get(DcMotor.class, "rightBack");
         strafeWheel = hardwareMap.get(DcMotor.class, "strafeWheel");
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         clawServo1 = hardwareMap.crservo.get("clawServo1");
@@ -41,18 +41,18 @@ public class HardwareBucketBrigade {
         colorSensor = hardwareMap.get(ColorSensor.class, "color");
 
 
-        leftDrive1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftDrive1.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftDriveFront.setDirection(DcMotor.Direction.FORWARD);
 
-        leftDrive2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftDrive2.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftDriveBack.setDirection(DcMotor.Direction.FORWARD);
 
 
-        rightDrive1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightDrive1.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
 
-        rightDrive2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightDrive2.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
 
         strafeWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         strafeWheel.setDirection(DcMotor.Direction.FORWARD);
@@ -61,5 +61,19 @@ public class HardwareBucketBrigade {
         armMotor.setDirection(DcMotor.Direction.FORWARD);
 
         ///colorServo.scaleRange(this.COLOR_SERVO_MIN_POSITION, this.COLOR_SERVO_MAX_POSITION);
+    }
+
+    public static final double LEFT_FRONT_CALIBRATION = 1.0;
+    public static final double RIGHT_FRONT_CALIBRATION = 1.0;
+    public static final double LEFT_BACK_CALIBRATION = 1.0;
+    public static final double RIGHT_BACK_CALIBRATION = 1.0;
+
+    public static final double MAX_RATIO = 0.75;
+
+    void setMotorSpeed(double leftStick, double rightStick) {
+        leftDriveFront.setPower(leftStick*MAX_RATIO*LEFT_FRONT_CALIBRATION);
+        rightDriveFront.setPower(rightStick*MAX_RATIO*RIGHT_FRONT_CALIBRATION);
+        leftDriveBack.setPower(leftStick*MAX_RATIO*LEFT_BACK_CALIBRATION);
+        rightDriveBack.setPower(rightStick*MAX_RATIO*RIGHT_BACK_CALIBRATION);
     }
 }

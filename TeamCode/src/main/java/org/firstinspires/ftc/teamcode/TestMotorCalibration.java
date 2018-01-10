@@ -84,21 +84,21 @@ public class TestMotorCalibration extends LinearOpMode {
 
     // Real.min(<val1>, 1.0);
     public void setMotorPowers(double amount) {
-        hw.leftDrive1.setPower(amount*leftDrive1Calibrate);
-        hw.leftDrive2.setPower(amount*leftDrive2Calibrate);
-        hw.rightDrive1.setPower(amount*rightDrive1Calibrate);
-        hw.rightDrive2.setPower(amount*rightDrive2Calibrate);
+        hw.leftDriveFront.setPower(amount*leftDrive1Calibrate);
+        hw.leftDriveBack.setPower(amount*leftDrive2Calibrate);
+        hw.rightDriveFront.setPower(amount*rightDrive1Calibrate);
+        hw.rightDriveBack.setPower(amount*rightDrive2Calibrate);
     }
 
     public void setEncoderRevolutions(int revs, double power) {
-        hw.leftDrive1.setTargetPosition(revs);
-        hw.leftDrive1.setPower(power);
-        hw.leftDrive2.setTargetPosition(revs);
-        hw.leftDrive2.setPower(power);
-        hw.rightDrive1.setTargetPosition(revs);
-        hw.rightDrive1.setPower(power);
-        hw.rightDrive2.setTargetPosition(revs);
-        hw.rightDrive2.setPower(power);
+        hw.leftDriveFront.setTargetPosition(revs);
+        hw.leftDriveFront.setPower(power);
+        hw.leftDriveBack.setTargetPosition(revs);
+        hw.leftDriveBack.setPower(power);
+        hw.rightDriveFront.setTargetPosition(revs);
+        hw.rightDriveFront.setPower(power);
+        hw.rightDriveBack.setTargetPosition(revs);
+        hw.rightDriveBack.setPower(power);
     }
 
 
@@ -122,15 +122,35 @@ public class TestMotorCalibration extends LinearOpMode {
             telemetry.addData("Left Motor", "Calibration " + leftDrive1Calibrate);
             telemetry.update();
             sleep(200);
-            if (gamepad1.a) {
-                break;
-            }
+
             if (gamepad1.x) {
                 leftDrive1Calibrate = leftDrive1Calibrate - 0.02;
             }
-            if (gamepad1.b) {
+            if (gamepad1.y) {
                 leftDrive1Calibrate = leftDrive1Calibrate + 0.02;
             }
+
+            if (gamepad1.a) {
+                leftDrive1Calibrate = leftDrive1Calibrate - 0.02;
+            }
+            if (gamepad1.b) {
+                leftDrive2Calibrate = leftDrive2Calibrate + 0.02;
+            }
+
+            if (gamepad1.x) {
+                rightDrive1Calibrate = rightDrive1Calibrate - 0.02;
+            }
+            if (gamepad1.y) {
+                rightDrive1Calibrate = rightDrive1Calibrate + 0.02;
+            }
+
+            if (gamepad1.a) {
+                rightDrive2Calibrate = rightDrive2Calibrate - 0.02;
+            }
+            if (gamepad1.b) {
+                rightDrive2Calibrate = rightDrive2Calibrate + 0.02;
+            }
+
             setMotorPowers(0.25);
 
         }

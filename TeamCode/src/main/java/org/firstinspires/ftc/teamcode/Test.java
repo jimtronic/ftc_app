@@ -75,21 +75,21 @@ public class Test extends LinearOpMode {
     // Next we need to determine good speed.
 
     public void setMotorPowers(double amount) {
-        hw.leftDrive1.setPower(amount);
-        hw.leftDrive2.setPower(amount);
-        hw.rightDrive1.setPower(amount);
-        hw.rightDrive2.setPower(amount);
+        hw.leftDriveFront.setPower(amount);
+        hw.leftDriveBack.setPower(amount);
+        hw.rightDriveFront.setPower(amount);
+        hw.rightDriveBack.setPower(amount);
     }
 
     public void setEncoderRevolutions(int revs, double power) {
-        hw.leftDrive1.setTargetPosition(revs);
-        hw.leftDrive1.setPower(power);
-        hw.leftDrive2.setTargetPosition(revs);
-        hw.leftDrive2.setPower(power);
-        hw.rightDrive1.setTargetPosition(revs);
-        hw.rightDrive1.setPower(power);
-        hw.rightDrive2.setTargetPosition(revs);
-        hw.rightDrive2.setPower(power);
+        hw.leftDriveFront.setTargetPosition(revs);
+        hw.leftDriveFront.setPower(power);
+        hw.leftDriveBack.setTargetPosition(revs);
+        hw.leftDriveBack.setPower(power);
+        hw.rightDriveFront.setTargetPosition(revs);
+        hw.rightDriveFront.setPower(power);
+        hw.rightDriveBack.setTargetPosition(revs);
+        hw.rightDriveBack.setPower(power);
     }
 
 
@@ -110,7 +110,7 @@ public class Test extends LinearOpMode {
         telemetry.addData("trying speed test", "dummy");
         telemetry.update();
         for (int i = 0; i < 50; i++) {
-            telemetry.addData("Left Motor", "Position " + hw.leftDrive1.getCurrentPosition());
+            telemetry.addData("Left Motor", "Position " + hw.leftDriveFront.getCurrentPosition());
             telemetry.update();
             sleep(100);
             //Thread.currentThread().wait(100);

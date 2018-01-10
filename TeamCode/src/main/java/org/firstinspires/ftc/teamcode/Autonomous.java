@@ -82,10 +82,10 @@ public class Autonomous extends LinearOpMode {
     double jewelSpeed = 0.5;
 
     public void driveDirection(double forwardOrBackward) {
-        hw.leftDrive1.setPower(jewelSpeed*forwardOrBackward);
-        hw.leftDrive2.setPower(jewelSpeed*forwardOrBackward);
-        hw.rightDrive1.setPower(jewelSpeed*forwardOrBackward);
-        hw.rightDrive2.setPower(jewelSpeed*forwardOrBackward);
+        hw.leftDriveFront.setPower(jewelSpeed*forwardOrBackward);
+        hw.leftDriveBack.setPower(jewelSpeed*forwardOrBackward);
+        hw.rightDriveFront.setPower(jewelSpeed*forwardOrBackward);
+        hw.rightDriveBack.setPower(jewelSpeed*forwardOrBackward);
     }
 
     public void strafeDirection(double forwardOrBackward) {

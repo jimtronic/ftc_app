@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.HardwareBucketBrigade;
-
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Drive_Forward")
 public class Drive_Forward extends LinearOpMode {
 
@@ -24,10 +22,10 @@ public class Drive_Forward extends LinearOpMode {
 
 
     public void driveDirection(int forwardOrBackward) {
-        hw.leftDrive1.setPower(jewelSpeed * forwardOrBackward);
-        hw.rightDrive1.setPower(jewelSpeed * forwardOrBackward);
-        hw.leftDrive2.setPower(jewelSpeed * forwardOrBackward);
-        hw.rightDrive2.setPower(jewelSpeed * forwardOrBackward);
+        hw.leftDriveFront.setPower(jewelSpeed * forwardOrBackward);
+        hw.rightDriveFront.setPower(jewelSpeed * forwardOrBackward);
+        hw.leftDriveBack.setPower(jewelSpeed * forwardOrBackward);
+        hw.rightDriveBack.setPower(jewelSpeed * forwardOrBackward);
 
     }
 

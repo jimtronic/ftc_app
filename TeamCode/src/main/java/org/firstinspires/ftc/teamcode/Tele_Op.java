@@ -20,11 +20,10 @@ public class Tele_Op extends OpMode {
     @Override
     public void loop() {
 
-
-        hw.leftDrive1.setPower(gamepad1.left_stick_y*.75);
-        hw.rightDrive1.setPower(gamepad1.right_stick_y*.75);
-        hw.leftDrive2.setPower(gamepad1.left_stick_y*.75);
-        hw.rightDrive2.setPower(gamepad1.right_stick_y*.75);
+        hw.leftDriveFront.setPower(gamepad1.left_stick_y*.75);
+        hw.rightDriveFront.setPower(gamepad1.right_stick_y*.75);
+        hw.leftDriveBack.setPower(gamepad1.left_stick_y*.75);
+        hw.rightDriveBack.setPower(gamepad1.right_stick_y*.75);
 
         if (gamepad1.dpad_right){
             hw.strafeWheel.setPower(1.0);
@@ -53,13 +52,13 @@ public class Tele_Op extends OpMode {
         hw.clawPower = Range.clip(hw.clawPower, -1, 1);
         hw.clawServo1.setPower(hw.clawPower);
 
-        telemetry.addData("LEFT_FRONT", hw.leftDrive1.getPower());
+        telemetry.addData("LEFT_FRONT", hw.leftDriveFront.getPower());
 
-        telemetry.addData("RIGHT_FRONT", hw.rightDrive1.getPower());
+        telemetry.addData("RIGHT_FRONT", hw.rightDriveFront.getPower());
 
-        telemetry.addData("LEFT_BACK", hw.leftDrive2.getPower());
+        telemetry.addData("LEFT_BACK", hw.leftDriveBack.getPower());
 
-        telemetry.addData("RIGHT_FRONT", hw.rightDrive2.getPower());
+        telemetry.addData("RIGHT_FRONT", hw.rightDriveBack.getPower());
 
         telemetry.addData("STRAFE", hw.strafeWheel.getPower());
 
