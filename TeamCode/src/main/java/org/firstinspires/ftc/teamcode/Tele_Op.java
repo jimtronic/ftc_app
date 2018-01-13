@@ -25,18 +25,14 @@ public class Tele_Op extends OpMode {
         hw.leftDriveBack.setPower(gamepad1.left_stick_y*.75);
         hw.rightDriveBack.setPower(gamepad1.right_stick_y*.75);
 
-        if (gamepad1.dpad_right){
-            hw.strafeWheel.setPower(1.0);
-        } else if (gamepad1.dpad_left){
-            hw.strafeWheel.setPower(-1.0);
-        } else {
-            hw.strafeWheel.setPower(0.0);
-        }
+        float strafe = gamepad1.right_trigger - gamepad1.left_trigger;
+
+        hw.strafeWheel.setPower(strafe*0.75);
 
         if (gamepad2.right_bumper){
-            hw.armMotor.setPower(1.0);
+            hw.armMotor.setPower(0.75);
         } else if (gamepad2.left_bumper){
-            hw.armMotor.setPower(-1.0);
+            hw.armMotor.setPower(-0.75);
         } else {
             hw.armMotor.setPower(0.0);
         }

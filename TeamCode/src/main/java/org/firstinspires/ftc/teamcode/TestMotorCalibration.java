@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestMotorCalibration")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="TestMotorCalibration")
 public class TestMotorCalibration extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();

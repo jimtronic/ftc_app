@@ -154,12 +154,12 @@ public class Autonomous extends LinearOpMode {
         driveDirection(-1.0*teamColor*SPEED_TO_DRIVE);
         sleep(TIME_TO_DRIVE_TO_BASE);
         driveDirection(0.0);
-
+        sleep(1000); //test for weird motor
 
         // Because of an issue involving the motors (not quite calibrated)
         // we need to strafe when in straight mode
         if (orientation == Orientation.Straight) {
-            strafeDirection(1.0);
+            strafeDirection(0.4);
             sleep(1000);
             strafeDirection(0.0);
         } else if (orientation == Orientation.L_Shaped) {
