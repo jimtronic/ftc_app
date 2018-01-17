@@ -67,7 +67,7 @@ public class Autonomous extends LinearOpMode {
     enum Orientation {Straight, L_Shaped};
 
     // constants for autonomous mode
-    final int TIME_TO_KNOCK_OFF = 400; // ms
+    final int TIME_TO_KNOCK_OFF = 300; // ms
     final int TIME_TO_DRIVE_TO_BASE = 4200;
     final int TIME_FOR_HYSTERISIS = 500;
     final int TIME_FOR_ARM_DROP = 1500;
