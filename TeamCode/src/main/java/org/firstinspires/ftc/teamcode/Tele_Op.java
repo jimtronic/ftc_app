@@ -27,7 +27,7 @@ public class Tele_Op extends OpMode {
 
         float strafe = gamepad1.right_trigger - gamepad1.left_trigger;
 
-        hw.strafeWheel.setPower(strafe*0.75);
+        hw.strafeWheel.setPower(strafe*0.5);
 
         if (gamepad2.right_bumper){
             hw.armMotor.setPower(0.75);
@@ -38,9 +38,9 @@ public class Tele_Op extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0.8){
-            hw.clawPower = hw.CLAW_SPEED;
-        } else if (gamepad2.left_trigger > 0.8){
             hw.clawPower = -hw.CLAW_SPEED;
+        } else if (gamepad2.left_trigger > 0.8){
+            hw.clawPower = hw.CLAW_SPEED;
         } else {
             hw.clawPower = 0;
         }

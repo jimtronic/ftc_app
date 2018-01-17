@@ -74,7 +74,7 @@ public class Autonomous extends LinearOpMode {
     final int TIME_FOR_CLAW_RAISE = 900;
     final double SPEED_TO_KNOCK_OFF = 0.7;
     final double SPEED_TO_DRIVE = 0.5;
-    final double SPEED_FOR_ARM_RAISE = 0.5;
+    final double SPEED_FOR_ARM_RAISE = -0.5;
 
     // parameters for autonomous mode
     int teamColor = RED;
