@@ -67,13 +67,13 @@ public class Autonomous extends LinearOpMode {
     enum Orientation {Straight, L_Shaped};
 
     // constants for autonomous mode
-    final int TIME_TO_KNOCK_OFF = 450; // ms
-    final int TIME_TO_DRIVE_TO_BASE = 4200;
+    final int TIME_TO_KNOCK_OFF = 330; // ms
+    final int TIME_TO_DRIVE_TO_BASE = 3300;
     final int TIME_FOR_HYSTERISIS = 500;
     final int TIME_FOR_ARM_DROP = 1500;
     final int TIME_FOR_CLAW_RAISE = 900;
-    final double SPEED_TO_KNOCK_OFF = 0.5;
-    final double SPEED_TO_DRIVE = 0.5;
+    final double SPEED_TO_KNOCK_OFF = 0.6;
+    final double SPEED_TO_DRIVE = 0.6;
     final double SPEED_FOR_ARM_RAISE = -0.5;
 
     // parameters for autonomous mode
@@ -102,13 +102,15 @@ public class Autonomous extends LinearOpMode {
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
+
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
         hw.clawServo1.setPower(0.7);
         hw.armMotor.setPower(SPEED_FOR_ARM_RAISE);
         sleep(TIME_FOR_CLAW_RAISE);
         hw.armMotor.setPower(0.0);
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
 
         // drop the arm
 
