@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-//@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="TestTurn")
 public class Test_QuarterTurn extends LinearOpMode {
 
     HardwareBucketBrigade hw = new HardwareBucketBrigade();
@@ -78,6 +78,7 @@ public class Test_QuarterTurn extends LinearOpMode {
     final int ARM_DROP_TIME = 1500;
     final int CLAW_RAISE_TIME = 500;
     final double ARM_RAISE_SPEED = 0.5;
+    final double SPEED_TO_DRIVE = 0.6;
 
 
     public void driveDirection(double forwardOrBackward) {
@@ -109,15 +110,10 @@ public class Test_QuarterTurn extends LinearOpMode {
         waitForStart();
 
         //drive forward/backward
+        turnDirection(SPEED_TO_DRIVE);
+        sleep(2900);
+        turnDirection(0.0);
 
-        for (int i=3; i < 25; i++) {
-            turnDirection(LEFT);
-            sleep(i * 100);
-            driveDirection(0);
-            telemetry.addData("Time to turn", "is: " + i*100);    //
-            telemetry.update();
-            sleep(1000);
-        }
     }
 
 }

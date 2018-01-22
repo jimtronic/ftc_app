@@ -68,7 +68,7 @@ public class Autonomous extends LinearOpMode {
 
     // constants for autonomous mode
     final int TIME_TO_KNOCK_OFF = 330; // ms
-    final int TIME_TO_DRIVE_TO_BASE = 3300;
+    final int TIME_TO_DRIVE_TO_BASE = 3000;
     final int TIME_FOR_HYSTERISIS = 500;
     final int TIME_FOR_ARM_DROP = 1500;
     final int TIME_FOR_CLAW_RAISE = 900;
@@ -87,6 +87,14 @@ public class Autonomous extends LinearOpMode {
         hw.rightDriveFront.setPower(jewelSpeed*forwardOrBackward);
         hw.rightDriveBack.setPower(jewelSpeed*forwardOrBackward);
     }
+
+    public void spinDirection(double forwardOrBackward) {
+        hw.leftDriveFront.setPower(jewelSpeed*forwardOrBackward);
+        hw.leftDriveBack.setPower(jewelSpeed*forwardOrBackward);
+        hw.rightDriveFront.setPower(-jewelSpeed*forwardOrBackward);
+        hw.rightDriveBack.setPower(-jewelSpeed*forwardOrBackward);
+    }
+
 
     public void strafeDirection(double forwardOrBackward) {
         hw.strafeWheel.setPower(jewelSpeed*forwardOrBackward);
@@ -155,6 +163,9 @@ public class Autonomous extends LinearOpMode {
 
         driveDirection(-1.0*teamColor*SPEED_TO_DRIVE);
         sleep(TIME_TO_DRIVE_TO_BASE);
+        if ((teamColor == BLUE) && orientation == Orientation.L_Shaped) {
+            sleep(400);
+        }
         driveDirection(0.0);
         sleep(1000); //test for weird motor
 
@@ -167,6 +178,47 @@ public class Autonomous extends LinearOpMode {
         } else if (orientation == Orientation.L_Shaped) {
             // TBD: write code for reorienting code.
         }
+
+        // MWW code:
+        if ((teamColor == RED) && orientation == Orientation.Straight) {
+            spinDirection(SPEED_TO_DRIVE);
+            sleep(2900);
+            spinDirection(0.0);
+        } else if ((teamColor == RED) && orientation == Orientation.L_Shaped) {
+            spinDirection(SPEED_TO_DRIVE);
+            sleep(1600);
+            spinDirection(0.0);
+        } else if ((teamColor == BLUE && orientation == Orientation.L_Shaped)) {
+            spinDirection(SPEED_TO_DRIVE);
+            sleep(1600);
+            spinDirection(0.0);
+        }
+
+        // Jacob code
+        //if (orientation == Orientation.Straight) {
+        driveDirection(SPEED_TO_DRIVE*-1.0);
+        sleep(2000);
+        driveDirection(0.0);
+
+        hw.clawServo1.setPower(-1.0);
+        sleep(2000);
+        hw.clawServo1.setPower(0.0);
+
+        driveDirection(SPEED_TO_DRIVE);
+        sleep(1000);
+        driveDirection(0.0);
+
+        driveDirection(SPEED_TO_DRIVE*-1.0);
+        sleep(1000);
+        driveDirection(SPEED_TO_DRIVE);
+        sleep(1000);
+        driveDirection(SPEED_TO_DRIVE*-1.0);
+        sleep(1000);
+        driveDirection(SPEED_TO_DRIVE);
+        sleep(300);
+
+
+
     }
 
 
